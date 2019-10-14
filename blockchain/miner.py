@@ -27,8 +27,9 @@ def proof_of_work(last_proof):
     proof = 0
     #  TODO: Your code here
     last_hash = json.dumps(self.last_block, sort_keys=True)
-        while self.valid_proof(last_hash, proof) is false:
-            proof += 1
+    
+    while self.valid_proof(last_hash, proof) is false:
+        proof += 1
     #
 
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
@@ -42,13 +43,16 @@ def valid_proof(last_hash, proof):
 
     IE:  last_hash: ...AE9123456, new hash 123456888...
     """
-
+    # Added this because it was not working so maybe it was not in right format.
+    last_hash = str(last_hash)
+    
     # TODO: Your code here!
     # pass
-    guess = f'{last_hash}{proof}'.encode()
-        hashed_guess = hashlib.sha256(guess).hexdigest()
-        # return True or False
-        return hashed_guess[:6] == '000000'
+    guess_proof = f'{last_hash}{proof}'.encode()
+
+    hashed_guess = hashlib.sha256(guess_proof).hexdigest()
+    
+    return hashed_guess[:6] == last_hash[-6:]
     #
 
 
@@ -62,7 +66,7 @@ if __name__ == '__main__':
     coins_mined = 0
 
     # Load or create ID
-    f = open("my_id.txt", "r")
+    f = open("./my_id.txt", "r")
     id = f.read()
     print("ID is", id)
     f.close()
